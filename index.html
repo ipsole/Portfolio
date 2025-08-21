@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docdril | Creative Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN for standard icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --heading-color: #000000;
+            --bg-color: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.2);
+            --text-color: #333333;
+            --subtle-text: #777777;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+        .header-font {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900; /* Made font bolder */
+        }
+        .heading-shadow {
+            color: var(--heading-color);
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* --- Header Entry & Shine Animations --- */
+        @keyframes zoomIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeSlideInRight {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes dropDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        /* Updated shine animation direction */
+        @keyframes shine {
+            from {
+                background-position: 200% center;
+            }
+            to {
+                background-position: -200% center;
+            }
+        }
+
+        .logo-animation {
+            animation: zoomIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            z-index: 10;
+        }
+        .docdril-animation {
+            opacity: 0;
+            /* Gradient for shine effect, with opposite angle */
+            background: linear-gradient(45deg, 
+                var(--heading-color) 45%, 
+                #ffffff 50%, 
+                var(--heading-color) 55%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: fadeSlideInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards,
+                         shine 8s linear infinite 2s; /* Slowed down animation */
+        }
+        .details-animation {
+            opacity: 0;
+            animation: dropDown 0.8s ease-out 1.3s forwards;
+        }
+
+        /* -- Floating animation for portfolio boxes -- */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            50% {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            }
+            100% {
+                transform: translateY(0px);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+        }
+        .custom-border {
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease-in-out;
+        }
+        .custom-border:hover {
+            border-color: var(--heading-color);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            animation-play-state: paused;
+        }
+        .portfolio-item {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .animate-on-scroll.is-visible .portfolio-item {
+            opacity: 1;
+            transform: scale(1);
+            animation: float 6s ease-in-out infinite; /* Restored float animation */
+        }
+        /* Staggered animation delays for portfolio items */
+        .animate-on-scroll.is-visible .portfolio-item:nth-child(1) { transition-delay: 0.1s; animation-delay: 0.1s; }
+        .animate-on-scroll.is-visible .portfolio-item:nth-child(2) { transition-delay: 0.2s; animation-delay: 0.2s; }
+        .animate-on-scroll.is-visible .portfolio-item:nth-child(3) { transition-delay: 0.3s; animation-delay: 0.3s; }
+        .animate-on-scroll.is-visible .portfolio-item:nth-child(4) { transition-delay: 0.4s; animation-delay: 0.4s; }
+        .animate-on-scroll.is-visible .portfolio-item:nth-child(5) { transition-delay: 0.5s; animation-delay: 0.5s; }
+        .animate-on-scroll.is-visible .portfolio-item:nth-child(6) { transition-delay: 0.6s; animation-delay: 0.6s; }
+        
+        .social-icon-header i {
+            font-size: 1.25rem;
+            color: var(--text-color);
+            transition: all 0.3s ease-in-out;
+        }
+        .social-icon-header:hover i {
+            color: var(--heading-color);
+            transform: scale(1.1);
+        }
+        .social-icon i {
+            font-size: 1.5rem;
+            color: var(--subtle-text);
+            transition: all 0.3s ease-in-out;
+        }
+        .social-icon:hover i {
+            color: var(--heading-color);
+            transform: scale(1.1);
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .platform-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease-in-out;
+        }
+        .platform-link:hover {
+            transform: scale(1.05);
+        }
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            font-weight: 300;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .modal-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.75rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #555;
+        }
+        .video-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1rem;
+            padding-bottom: 1rem;
+        }
+        .youtube-short {
+            flex: 0 0 80%;
+            max-width: 20rem;
+            scroll-snap-align: center;
+            aspect-ratio: 9 / 16;
+            border: none;
+            border-radius: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .youtube-short {
+                flex: 0 0 auto;
+                width: 18rem;
+            }
+        }
+        /* -- Paintbrush Underline -- */
+        .portfolio-heading {
+            position: relative;
+            padding-bottom: 15px; /* Space for the underline */
+        }
+        .portfolio-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px; /* Width of the brush stroke */
+            height: 15px; /* Height of the brush stroke */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'%3E%3Cpath d='M2 6 C 20 0, 40 12, 60 6 S 80 0, 98 6' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        /* -- Grid Background for Portfolio -- */
+        .grid-background {
+            position: relative;
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+        .grid-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(to right, var(--border-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 0;
+            opacity: 0.5;
+            mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+        }
+        .portfolio-item {
+            position: relative;
+            z-index: 1;
+            background-color: var(--bg-color); /* Ensure boxes have a solid background */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-6 pt-12 pb-8">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <div class="relative flex justify-center items-center gap-4 mb-2">
+                <!-- Logo Image -->
+                <img src="https://uploads.onecompiler.io/43u3mcx4u/43u3nk2gh/docdril%20logo.png" alt="Docdril Logo" class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-gray-200 shadow-lg logo-animation">
+                <h1 class="text-5xl md:text-6xl header-font tracking-wider heading-shadow docdril-animation">
+                    Docdril
+                </h1>
+            </div>
+            <div class="details-animation">
+                <div class="text-center mb-4">
+                    <p class="text-xs text-gray-500">A creation by</p>
+                    <a href="#about" class="text-sm font-semibold text-gray-800 hover:underline">Piyush Chaudhary</a>
+                </div>
+                
+                <div class="flex justify-center space-x-6">
+                    <!-- Docdril's YouTube Link -->
+                    <a href="https://www.youtube.com/@Docdril" target="_blank" class="social-icon-header"><i class="fab fa-youtube"></i></a>
+                    <!-- Docdril's Instagram Link -->
+                    <a href="https://www.instagram.com/docdril/" target="_blank" class="social-icon-header"><i class="fab fa-instagram"></i></a>
+                    <!-- Docdril's LinkedIn Link -->
+                    <a href="https://www.linkedin.com/company/docdril/" target="_blank" class="social-icon-header"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <!-- Expandable Bio Section -->
+            <div class="mt-6 max-w-2xl mx-auto text-gray-600 text-center">
+                <p id="bio-text">
+                    <span id="bio-main-text"></span><span id="bio-more" class="hidden">
+                        <br/><br/>
+                        The person behind the brand is Piyush Chaudhary, the Founder, Director, and Video Editor. He specializes in exploring brain science and technology, while also providing freelance creative services.
+                    </span>
+                </p>
+                <button id="read-more-btn" class="text-black font-semibold mt-2 hover:underline focus:outline-none hidden">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Sample Edits Section -->
+            <section class="mb-2 animate-on-scroll">
+                <div class="flex justify-start">
+                    <button id="open-modal-btn" class="flex items-center gap-2 font-semibold text-gray-800 hover:underline">
+                        Sample Edits <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="mb-12 animate-on-scroll">
+                <h2 class="text-3xl md:text-4xl header-font text-center mb-8 heading-shadow portfolio-heading">Portfolio</h2>
+                <div class="grid-background">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-2xl mx-auto">
+                        <a href="https://pkc.myportfolio.com/graphic-design" target="_blank" class="custom-border portfolio-item rounded-lg p-4 text-center cursor-pointer">Graphic Design</a>
+                        <a href="https://pkc.myportfolio.com/video-editing" target="_blank" class="custom-border portfolio-item rounded-lg p-4 text-center cursor-pointer">Video Edits</a>
+                        <a href="https://clixpedia.myportfolio.com/" target="_blank" class="custom-border portfolio-item rounded-lg p-4 text-center cursor-pointer">Photography</a>
+                        <a href="https://pkc.myportfolio.com/motion-graphics" target="_blank" class="custom-border portfolio-item rounded-lg p-4 text-center cursor-pointer">Motion Design</a>
+                        <button id="open-tools-modal-btn" class="custom-border portfolio-item rounded-lg p-4 text-center cursor-pointer">Tools Designed</button>
+                        <a href="https://pkc.myportfolio.com/ux-design" target="_blank" class="custom-border portfolio-item rounded-lg p-4 text-center cursor-pointer">UXD</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="mb-12 animate-on-scroll">
+                <h2 class="text-3xl md:text-4xl header-font text-center mb-8 heading-shadow">About</h2>
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <div class="w-full md:w-2/3">
+                        <h3 class="text-2xl header-font mb-1 heading-shadow">Piyush Chaudhary</h3>
+                        <p class="text-gray-500 mb-3">Founder, Director & Editor</p>
+                        <!-- Social Icons -->
+                        <div class="flex space-x-4 mb-6">
+                            <a href="https://www.youtube.com/@piyushchaudhary15" target="_blank" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.instagram.com/cozicupid/" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/ipsole/" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed" id="about-text">
+                            As the creator of <strong class="text-black">Docdril</strong>, I am an analytical and ambitious storyteller focused on the intersection of science, mystery, and art. My work explores brain science, psychology, AI, and technology through cinematic, scroll-stopping short-form videos.
+                            <span id="about-more" class="hidden">
+                                <br/><br/>
+                                I specialize in video editing and motion design, creating content that captivates and educates. In addition to creating knowledge-based content, I offer freelance services for a variety of artworks, including high-quality video edits and motion graphics for clients. My goal is to blend deep research with compelling visuals to create an unforgettable experience, both for my brand and for my clients.
+                            </span>
+                        </p>
+                        <button id="about-read-more-btn" class="text-black font-semibold mt-2 hover:underline focus:outline-none">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="w-full md:w-1/3 flex justify-center md:justify-end">
+                        <div class="custom-border rounded-lg p-1 w-48 md:w-56">
+                             <img src="https://uploads.onecompiler.io/43u3mcx4u/43u3nk2gh/IMG_2916.jpg" alt="Piyush Chaudhary" class="rounded-lg w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x600/0a0a0a/ffffff?text=Image+Not+Found';">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Music Section -->
+            <section id="ai-music" class="mb-12 animate-on-scroll">
+                <h2 class="text-3xl md:text-4xl header-font text-center mb-8 heading-shadow">AI Song Artist 🎵</h2>
+                <div class="max-w-md mx-auto text-center">
+                    <p class="text-gray-600 mb-6">Listen to my AI-generated music with self-made lyrics on your favorite platform.</p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="https://open.spotify.com/artist/6YjVdwvw0MXROLhDZLym41?si=RUOIMuiUS6Cunb4TzsQ8yw" target="_blank" class="platform-link bg-green-500 text-white"><i class="fab fa-spotify"></i><span>Spotify</span></a>
+                        <a href="https://music.apple.com/in/artist/piyush-chaudhary/1832113872" target="_blank" class="platform-link bg-black text-white"><i class="fab fa-apple"></i><span>Apple Music</span></a>
+                        <a href="https://music.youtube.com/channel/UCEMvn8gToDBDlGQdv5OqTKQ?si=2SmKL6jvTnIBIQyT" target="_blank" class="platform-link bg-red-600 text-white"><i class="fab fa-youtube"></i><span>YouTube Music</span></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 py-6 border-t border-gray-200">
+            <p class="text-gray-500">&copy; <span id="year"></span> Docdril. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <i id="close-modal-btn" class="fas fa-times modal-close"></i>
+            <h3 class="text-2xl font-bold mb-4 text-center">Sample Edits</h3>
+            <div class="video-container">
+                <iframe class="youtube-short" src="https://www.youtube.com/embed/GrleBBDJ4D0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe class="youtube-short" src="https://www.youtube.com/embed/DZUbwbHdUoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe class="youtube-short" src="https://www.youtube.com/embed/dmlFJq7ojjE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div id="video-counter" class="text-center mt-4 font-semibold text-gray-600">1 / 3</div>
+        </div>
+    </div>
+
+    <!-- Tools Modal -->
+    <div id="tools-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <i id="close-tools-modal-btn" class="fas fa-times modal-close"></i>
+            <h3 class="text-2xl font-bold mb-4 text-center">Tools Designed</h3>
+            <div class="flex flex-col md:flex-row flex-wrap justify-center gap-4">
+                <a href="https://ipsole.github.io/Docdril/" target="_blank" class="custom-border rounded-lg p-4 text-center cursor-pointer w-40">Calculator</a>
+                <a href="https://ipsole.github.io/To-do-list/" target="_blank" class="custom-border rounded-lg p-4 text-center cursor-pointer w-40">To-do List</a>
+                <a href="#" class="custom-border rounded-lg p-4 text-center cursor-pointer w-40">Notes</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // JavaScript for expandable bio in header
+        const readMoreBtn = document.getElementById('read-more-btn');
+        const bioMore = document.getElementById('bio-more');
+        readMoreBtn.addEventListener('click', () => {
+            bioMore.classList.toggle('hidden');
+            const icon = readMoreBtn.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        });
+
+        // JavaScript for expandable bio in About section
+        const aboutReadMoreBtn = document.getElementById('about-read-more-btn');
+        const aboutMore = document.getElementById('about-more');
+        aboutReadMoreBtn.addEventListener('click', () => {
+            aboutMore.classList.toggle('hidden');
+            const icon = aboutReadMoreBtn.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        });
+
+        // JavaScript for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        elementsToAnimate.forEach(el => observer.observe(el));
+
+        // JavaScript for Video Modal
+        const openModalBtn = document.getElementById('open-modal-btn');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const videoModal = document.getElementById('video-modal');
+        const videoCounter = document.getElementById('video-counter');
+        const videos = document.querySelectorAll('.video-container iframe');
+        const videoContainer = document.querySelector('.video-container');
+
+        openModalBtn.addEventListener('click', () => {
+            videoModal.classList.remove('hidden');
+        });
+        closeModalBtn.addEventListener('click', () => {
+            videoModal.classList.add('hidden');
+        });
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.add('hidden');
+            }
+        });
+
+        // Observer for video counter
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const videoIndex = Array.from(videos).indexOf(entry.target);
+                    videoCounter.textContent = `${videoIndex + 1} / ${videos.length}`;
+                }
+            });
+        }, { root: videoContainer, threshold: 0.51 });
+
+        videos.forEach(video => videoObserver.observe(video));
+
+        // JavaScript for Tools Modal
+        const openToolsModalBtn = document.getElementById('open-tools-modal-btn');
+        const closeToolsModalBtn = document.getElementById('close-tools-modal-btn');
+        const toolsModal = document.getElementById('tools-modal');
+
+        openToolsModalBtn.addEventListener('click', () => {
+            toolsModal.classList.remove('hidden');
+        });
+        closeToolsModalBtn.addEventListener('click', () => {
+            toolsModal.classList.add('hidden');
+        });
+        toolsModal.addEventListener('click', (e) => {
+            if (e.target === toolsModal) {
+                toolsModal.classList.add('hidden');
+            }
+        });
+
+        // Typewriter effect for header bio
+        document.addEventListener('DOMContentLoaded', () => {
+            const bioMainText = document.getElementById('bio-main-text');
+            const fullText = "Docdril (Documentary + Drill) merges the energy of deep research, creating cinematic, scroll-stopping content that captivates and educates.";
+            let i = 0;
+            bioMainText.parentElement.classList.add('typewriter-cursor');
+
+            function typeWriter() {
+                if (i < fullText.length) {
+                    bioMainText.innerHTML += fullText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                } else {
+                    bioMainText.parentElement.classList.remove('typewriter-cursor');
+                    readMoreBtn.classList.remove('hidden');
+                }
+            }
+            typeWriter();
+        });
+    </script>
+
+</body>
+</html>
