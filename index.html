@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docdril | Ideate, Design, Edit</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    
+    <!-- Premium Font Stack -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Locked Creative Font System */
+        :root {
+            --primary-font: 'Outfit', sans-serif;
+            --header-font: 'Syne', sans-serif;
+        }
+
+        body {
+            font-family: var(--primary-font);
+            background: linear-gradient(120deg, #ffffff 0%, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%, #ffffff 100%);
+            background-size: 200% 200%;
+            animation: smoothFlow 15s ease infinite;
+            color: #111827;
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: var(--header-font);
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+        }
+
+        @keyframes smoothFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* White Glow Rotation */
+        .animate-spin-slow {
+            animation: spin-slow 4s linear infinite;
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Glass Effects */
+        .glass-blur, .glass-internal {
+            position: relative; 
+            overflow: hidden; 
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.0); 
+        }
+        
+        .glass-blur { border: 1px solid rgba(255, 255, 255, 0.3); }
+
+        .glass-internal {
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: float-small 6s ease-in-out infinite; 
+        }
+
+        .glass-internal:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes float-small {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Robot Spotlight Effect */
+        .robot-section-glow {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 70%);
+            position: relative;
+        }
+        
+        .robot-spotlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 5;
+            animation: pulse-glow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Liquid Speech Bubble Style */
+        .liquid-bubble {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            border-radius: 24px;
+            border-bottom-right-radius: 4px;
+            animation: liquid-float 4s ease-in-out infinite;
+        }
+
+        .liquid-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            background: inherit;
+            backdrop-filter: inherit;
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+
+        @keyframes liquid-float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        /* Graph Background Pattern */
+        .graph-background {
+            position: relative;
+            isolation: isolate;
+        }
+        .graph-background::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 1.5rem;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px; 
+            -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);
+            mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);
+        }
+
+        /* Timeline Styles */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            bottom: 75px;
+            width: 4px;
+            background-color: #D1D5DB;
+            transform: translateX(-50%) scaleY(0);
+            transform-origin: top;
+            transition: transform 1s ease-out;
+        }
+        .timeline-container.is-visible::before { transform: translateX(-50%) scaleY(1); }
+
+        .timeline-item { display: flex; position: relative; width: 100%; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .timeline-item.is-visible { opacity: 1; transform: translateY(0); }
+        .timeline-item:nth-child(odd) { justify-content: flex-end; }
+        .timeline-item:nth-child(even) { justify-content: flex-start; }
+
+        .timeline-circle {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 4px solid #000;
+            z-index: 10;
+            transform: translateX(-50%) scale(0);
+            transition: transform 0.4s ease;
+        }
+        .timeline-item.is-visible .timeline-circle { transform: translateX(-50%) scale(1); }
+
+        .timeline-content {
+            width: calc(50% - 40px);
+            padding: 24px;
+            border-radius: 20px;
+        }
+
+        /* Form Logic Styles */
+        .form-step.hidden { display: none; }
+
+        /* Robot Container Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .robot-container { animation: float 5s ease-in-out infinite; }
+
+        .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+        .paper-plane { position: fixed; z-index: 100; pointer-events: none; opacity: 0; width: 50px; height: 50px; }
+        .paper-plane.flying { opacity: 1; animation: flyTour 10s ease-in-out forwards; }
+        @keyframes flyTour {
+            0% { top: 10%; left: -10%; transform: rotate(45deg); }
+            20% { top: 20%; left: 80%; transform: rotate(120deg); }
+            50% { top: 50%; left: 10%; transform: rotate(10deg); }
+            100% { top: 110%; left: 110%; transform: rotate(45deg); }
+        }
+
+        /* Input Styling for the Form */
+        .custom-input {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            width: 100%;
+            transition: all 0.2s;
+            font-family: var(--primary-font);
+        }
+        .custom-input:focus {
+            outline: none;
+            border-color: #000;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Toast UI */
+        #toast-container {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .toast-box {
+            background: #000;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        .toast-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+    <!-- Toast Notification -->
+    <div id="toast-container">
+        <div id="toast" class="toast-box">Message here</div>
+    </div>
+
+    <!-- Paper Plane -->
+    <div id="paper-plane" class="paper-plane text-black">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 2L22 12L2 22L4 12L2 2Z"/></svg>
+    </div>
+
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="sticky top-0 z-50 w-full glass-blur border-b border-gray-100/30">
+            <nav class="max-w-7xl mx-auto px-6 flex justify-between items-center py-5">
+                <div class="flex items-center">
+                    <div id="logo-trigger" class="flex items-center space-x-3 cursor-pointer group">
+                        <img src="https://placehold.co/48x48/000000/FFFFFF?text=D" alt="Logo" class="w-10 h-10 rounded-xl transition-transform group-hover:rotate-12">
+                        <span class="font-bold text-2xl tracking-tight">Docdril&trade;</span>
+                    </div>
+
+                    <button id="header-play-btn" class="ml-4 bg-white text-black hover:text-gray-700 rounded-full p-2.5 shadow-md hover:shadow-lg transition-transform transform hover:scale-110 border border-gray-100 flex items-center justify-center group" title="Play Video">
+                        <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="https://portfolio.docdril.in" class="text-sm font-bold text-gray-600 hover:text-black transition">Portfolio</a>
+                    <a href="#services" class="text-sm font-bold text-gray-600 hover:text-black transition">Services</a>
+                    <a href="#workflow" class="text-sm font-bold text-gray-600 hover:text-black transition">Workflow</a>
+                    <a href="#contact" class="bg-black text-white px-7 py-2.5 rounded-full text-sm font-bold hover:scale-105 transition shadow-lg">Get in Touch</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow">
+            <!-- Hero Section -->
+            <section class="min-h-[75vh] flex flex-col justify-center pt-2 md:pt-4 pb-8 md:pb-12 px-6 overflow-hidden">
+                <div class="w-full grid grid-cols-1 gap-12 items-center max-w-4xl mx-auto">
+                    
+                    <!-- Robot Column -->
+                    <div class="reveal-on-scroll relative z-[51] w-full robot-section-glow rounded-[3rem] p-6 md:p-12 shadow-2xl">
+                        <div class="robot-spotlight"></div>
+                        
+                        <div class="absolute z-30 top-16 md:top-20 left-1/2 -translate-x-[110%] md:-translate-x-[130%] liquid-bubble px-6 py-3 flex items-center justify-center">
+                            <span class="text-white font-bold text-lg md:text-xl tracking-tight">Hi, Folks!</span>
+                        </div>
+
+                        <div class="max-w-2xl mx-auto h-[250px] md:h-[350px] robot-container overflow-hidden rounded-3xl relative z-10 pt-12 pl-12">
+                            <iframe 
+                                src='https://my.spline.design/genkubgreetingrobot-1risyBQsn5fHVnO9r2idsNhk/?logo=0&background=000000' 
+                                frameborder='0' 
+                                class="w-full border-0 h-[152%] md:h-[145%] -translate-y-[15%] md:-translate-y-[10%]"
+                            ></iframe>
+                        </div>
+
+                        <div class="absolute z-20 top-1/2 -translate-y-1/2 right-4 sm:right-16 flex items-center gap-2 sm:gap-4">
+                            <span class="text-lg sm:text-2xl font-bold text-white">Ask</span>
+                            <div class="relative w-16 h-16 sm:w-24 sm:h-24 group transition-transform hover:scale-110">
+                                <div class="absolute inset-0 rounded-full p-[3px] overflow-hidden flex items-center justify-center shadow-2xl bg-[#222]">
+                                    <div class="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0%,rgba(255,255,255,0.4)_50%,transparent_100%)] animate-spin-slow"></div>
+                                    <a href="https://ask.docdril.in" title="Ask Docdril" class="relative z-10 w-full h-full bg-white text-black rounded-full flex items-center justify-center">
+                                        <svg class="w-8 h-8 sm:w-12 sm:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Text -->
+                    <div class="text-center">
+                        <a href="https://portfolio.docdril.in" class="reveal-on-scroll inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-gray-100 hover:bg-gray-200 text-sm font-bold text-gray-800 transition-colors border border-gray-200">
+                            <span class="relative flex h-2 w-2">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                            View our Portfolio
+                        </a>
+
+                        <div class="w-full flex justify-center">
+                            <h1 class="reveal-on-scroll graph-background p-8 rounded-3xl text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                                Ideate Design Edit
+                            </h1>
+                        </div>
+                        <p class="reveal-on-scroll text-xl md:text-2xl text-gray-500 mt-8 max-w-2xl mx-auto font-medium">
+                            Inspiring and promising content for the modern digital era.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Specialties Section -->
+            <section id="services" class="py-32 bg-gray-100/70 backdrop-blur-sm relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="text-center mb-12 reveal-on-scroll">
+                        <h2 class="text-4xl md:text-6xl font-bold mb-4">Our Specialities</h2>
+                        <p class="text-gray-500 text-lg">Your high-impact production partner.</p>
+                    </div>
+
+                    <div class="glass-internal rounded-[2.5rem] bg-white p-8 md:p-12 min-h-[550px] flex flex-col transition-all duration-500">
+                        <!-- Progress Indicator -->
+                        <div id="form-progress" class="flex justify-center gap-3 mb-12 opacity-0 transition-opacity duration-300">
+                            <div class="prog-dot h-2 w-10 rounded-full bg-black"></div>
+                            <div id="prog-2" class="prog-dot h-2 w-10 rounded-full bg-gray-200"></div>
+                            <div id="prog-3" class="prog-dot h-2 w-10 rounded-full bg-gray-200"></div>
+                            <div id="prog-4" class="prog-dot h-2 w-10 rounded-full bg-gray-200"></div>
+                        </div>
+
+                        <!-- Step 1: Services Grid -->
+                        <div id="step-1" class="form-step">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div class="glass-internal p-8 rounded-3xl cursor-pointer hover:border-black transition text-center group" onclick="selectService('short-form', 'Short-Form Editing')">
+                                    <div class="text-5xl mb-6 group-hover:scale-110 transition">🎬</div>
+                                    <h3 class="text-2xl font-bold mb-2">Short-Form</h3>
+                                    <p class="text-sm text-gray-500 font-medium">Reels, Shorts, TikToks.</p>
+                                </div>
+                                <div class="glass-internal p-8 rounded-3xl cursor-pointer hover:border-black transition text-center group" onclick="selectService('long-form', 'Long-Form Editing')">
+                                    <div class="text-5xl mb-6 group-hover:scale-110 transition">📺</div>
+                                    <h3 class="text-2xl font-bold mb-2">Long-Form</h3>
+                                    <p class="text-sm text-gray-500 font-medium">YouTube Vlogs, Docs.</p>
+                                </div>
+                                <div class="glass-internal p-8 rounded-3xl cursor-pointer hover:border-black transition text-center group" onclick="selectService('social-ads', 'Social Media Ads')">
+                                    <div class="text-5xl mb-6 group-hover:scale-110 transition">🚀</div>
+                                    <h3 class="text-2xl font-bold mb-2">Social Ads</h3>
+                                    <p class="text-sm text-gray-500 font-medium">FB, Insta & UGC Campaigns.</p>
+                                </div>
+                                <div class="glass-internal p-8 rounded-3xl cursor-pointer hover:border-black transition text-center group" onclick="selectService('podcast-editing', 'Podcast Editing')">
+                                    <div class="text-5xl mb-6 group-hover:scale-110 transition">🎙️</div>
+                                    <h3 class="text-2xl font-bold mb-2">Podcasts</h3>
+                                    <p class="text-sm text-gray-500 font-medium">Audio & Video Multicam.</p>
+                                </div>
+                                <div class="glass-internal p-8 rounded-3xl cursor-pointer hover:border-black transition text-center group" onclick="selectService('visual-brand', 'Visual Branding')">
+                                    <div class="text-5xl mb-6 group-hover:scale-110 transition">🎨</div>
+                                    <h3 class="text-2xl font-bold mb-2">Thumbnails</h3>
+                                    <p class="text-sm text-gray-500 font-medium">High-CTR visual assets.</p>
+                                </div>
+                                <div class="glass-internal p-8 rounded-3xl flex flex-col justify-center items-center text-center">
+                                    <h3 class="text-2xl font-bold mb-2">Custom?</h3>
+                                    <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-6">Bulk Retainers</p>
+                                    <a href="mailto:info@docdril.in" class="bg-black text-white px-6 py-2.5 rounded-full font-bold hover:scale-105 transition">Inquiry</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Packages Selection -->
+                        <div id="step-2" class="form-step hidden text-center">
+                            <h3 id="service-title" class="text-3xl font-extrabold mb-10">Select Your Plan</h3>
+                            <div id="package-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
+                            <button onclick="goStep(1)" class="text-gray-400 font-bold hover:text-black transition uppercase text-xs tracking-widest">← Back to Services</button>
+                        </div>
+
+                        <!-- Step 3: Customer Details -->
+                        <div id="step-3" class="form-step hidden max-w-xl mx-auto w-full">
+                            <h3 class="text-3xl font-extrabold mb-8 text-center">Project Details</h3>
+                            <div class="space-y-6 mb-10">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Full Name</label>
+                                        <input type="text" id="user-name" class="custom-input" placeholder="Enter name">
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Email Address</label>
+                                        <input type="email" id="user-email" class="custom-input" placeholder="Enter email">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Additional Notes</label>
+                                    <textarea id="user-scope" class="custom-input h-32 resize-none" placeholder="Requirements, links, or specific vision..."></textarea>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <button onclick="goStep(2)" class="text-gray-400 font-bold hover:text-black transition uppercase text-xs tracking-widest">← Back</button>
+                                <button onclick="handleStep3()" class="bg-black text-white px-10 py-4 rounded-2xl font-bold hover:scale-105 transition shadow-2xl">Confirm Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Checkout Summary -->
+                        <div id="step-4" class="form-step hidden max-w-md mx-auto w-full text-center">
+                            <h3 class="text-3xl font-extrabold mb-10">Final Checkout</h3>
+                            <div class="glass-internal rounded-[2rem] p-10 mb-12 text-left bg-gray-50/50">
+                                <div class="flex flex-col gap-6">
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Service</p>
+                                        <p id="summ-service" class="text-xl font-bold text-black">-</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Package</p>
+                                        <p id="summ-package" class="text-xl font-bold text-black">-</p>
+                                    </div>
+                                    <div class="pt-6 border-t border-gray-100 flex justify-between items-center">
+                                        <p class="text-xs font-bold text-black uppercase tracking-widest">Total</p>
+                                        <p id="summ-price" class="text-4xl font-black text-black">₹0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="pay-btn" class="w-full bg-black text-white py-6 rounded-3xl font-bold text-2xl shadow-2xl hover:scale-[1.02] active:scale-95 transition-all">Secure Payment</button>
+                            <button onclick="goStep(3)" class="mt-8 text-gray-400 font-bold hover:text-black transition uppercase text-xs tracking-widest">Edit Information</button>
+                        </div>
+
+                        <!-- Success Screen -->
+                        <div id="success-screen" class="form-step hidden text-center flex flex-col items-center justify-center py-20">
+                            <div class="w-24 h-24 bg-green-500 text-white rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <h3 class="text-4xl font-extrabold mb-4">Success!</h3>
+                            <p class="text-gray-500 text-lg max-w-sm mb-10">Your request has been logged. We'll reach out to you within 12 hours.</p>
+                            <button onclick="window.location.reload()" class="bg-black text-white px-10 py-4 rounded-full font-bold hover:scale-105 transition shadow-lg">Back to Home</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Production Workflow - RESTORED FULL 8 STEPS -->
+            <section id="workflow" class="py-32 px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl md:text-6xl font-bold text-center mb-24 reveal-on-scroll">Production Workflow</h2>
+                    <div class="timeline-container relative reveal-on-scroll">
+                        <!-- Step 1 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">01. Inquiry & Scope</h3>
+                                <p class="text-sm text-gray-500 font-medium">Reach out with your vision. We quickly review needs and align on expectations.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">02. Discovery Meeting</h3>
+                                <p class="text-sm text-gray-500 font-medium">Deep dive into your brand, audience, and goals. We present a custom workflow.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">03. Proposal & Deal</h3>
+                                <p class="text-sm text-gray-500 font-medium">Confirm the package, timeline, and deliverables. Once agreed, the project is locked.</p>
+                            </div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">04. Secure Payment</h3>
+                                <p class="text-sm text-gray-500 font-medium">Initial payment settles the agreement and secures your slot in our schedule.</p>
+                            </div>
+                        </div>
+                        <!-- Step 5 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">05. Client Onboarding</h3>
+                                <p class="text-sm text-gray-500 font-medium">Footage and brand assets are transferred securely to our production studio.</p>
+                            </div>
+                        </div>
+                        <!-- Step 6 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">06. Production Kick-off</h3>
+                                <p class="text-sm text-gray-500 font-medium">Our specialists execute the vision, focusing on high-impact motion and sound design.</p>
+                            </div>
+                        </div>
+                        <!-- Step 7 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">07. Review & Finalize</h3>
+                                <p class="text-sm text-gray-500 font-medium">Draft review and polish phase. We refine the work until it meets your absolute satisfaction.</p>
+                            </div>
+                        </div>
+                        <!-- Step 8 -->
+                        <div class="timeline-item reveal-on-scroll">
+                            <div class="timeline-circle"></div>
+                            <div class="timeline-content glass-internal">
+                                <h3 class="text-xl font-bold mb-2">08. Delivery & Success</h3>
+                                <p class="text-sm text-gray-500 font-medium">Final render delivery and successful launch of your high-performance content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-40 bg-black text-white text-center px-6">
+                <div class="max-w-3xl mx-auto reveal-on-scroll">
+                    <h2 class="text-5xl md:text-8xl font-bold mb-10 tracking-tight">LET'S WORK.</h2>
+                    <p class="text-gray-400 text-xl mb-12 font-medium">Ready to elevate your digital presence?</p>
+                    <a href="mailto:info@docdril.in" class="inline-block text-2xl md:text-4xl font-bold border-b-4 border-white pb-2 hover:text-gray-400 transition">info@docdril.in</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="py-12 px-6 border-t border-gray-100 bg-white">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm font-bold text-gray-400">
+                <p>&copy; 2025 Docdril Studio. All rights reserved.</p>
+                <div class="flex space-x-8">
+                    <a href="https://policy.docdril.in" class="hover:text-black">Policies</a>
+                    <a href="#" class="hover:text-black">Instagram</a>
+                    <a href="#" class="hover:text-black">Twitter</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-xl p-6">
+        <button id="close-modal" class="absolute top-10 right-10 text-white hover:scale-110 transition">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2"/></svg>
+        </button>
+        <div class="w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl">
+            <iframe id="vimeo-player" src="https://player.vimeo.com/video/1139672991" class="w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Global variables for function and state accessibility
+        var cart = { service: '', package: '', price: 0 };
+        var packageData = {
+            'short-form': [ {n: 'Single Reel', p: 500}, {n: '3 Pack Bundle', p: 1400}, {n: '5 Pack Bundle', p: 2200} ],
+            'long-form': [ {n: 'Standard Edit (10m)', p: 1000}, {n: 'Pro Storytelling', p: 1800}, {n: 'Extended Mix', p: 2500} ],
+            'social-ads': [ {n: 'Single Platform Ad', p: 800}, {n: 'Ad Bundle (2)', p: 1500}, {n: 'Campaign Set (3)', p: 2100} ],
+            'podcast-editing': [ {n: 'Audio Polishing', p: 1500}, {n: 'Video Edit + Clips', p: 2500}, {n: 'Full Season Support', p: 3200} ],
+            'visual-brand': [ {n: 'Hero Thumbnail', p: 400}, {n: '3 Pack Package', p: 1000}, {n: 'Full Branding Kit', p: 2000} ]
+        };
+
+        // Utility to show toast notifications (replacing alert)
+        function notify(msg) {
+            var toast = document.getElementById('toast');
+            if (toast) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(function() { toast.classList.remove('show'); }, 3000);
+            }
+        }
+
+        // Form Step Navigation
+        function goStep(step) {
+            var steps = document.querySelectorAll('.form-step');
+            steps.forEach(function(el) { el.classList.add('hidden'); });
+            
+            var target = document.getElementById('step-' + step);
+            if (target) {
+                target.classList.remove('hidden');
+                // Smooth scroll specifically to the specialty section container
+                var section = document.getElementById('services');
+                if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Progress tracking
+            var progress = document.getElementById('form-progress');
+            if (progress) {
+                if (step > 1 && step < 5) {
+                    progress.classList.remove('opacity-0');
+                    for (var i = 2; i <= 4; i++) {
+                        var dot = document.getElementById('prog-' + i);
+                        if (dot) {
+                            if (i <= step) {
+                                dot.classList.add('bg-black');
+                                dot.classList.remove('bg-gray-200');
+                            } else {
+                                dot.classList.add('bg-gray-200');
+                                dot.classList.remove('bg-black');
+                            }
+                        }
+                    }
+                } else {
+                    progress.classList.add('opacity-0');
+                }
+            }
+
+            // Update confirmation details
+            if (step === 4) {
+                document.getElementById('summ-service').textContent = cart.service;
+                document.getElementById('summ-package').textContent = cart.package;
+                document.getElementById('summ-price').textContent = '₹' + cart.price;
+            }
+        }
+
+        // Service Choice
+        function selectService(id, name) {
+            cart.service = name;
+            var grid = document.getElementById('package-grid');
+            var sTitle = document.getElementById('service-title');
+            if (sTitle) sTitle.textContent = name;
+            
+            if (grid && packageData[id]) {
+                grid.innerHTML = packageData[id].map(function(pkg) {
+                    return '<div class="glass-internal p-8 rounded-3xl cursor-pointer hover:bg-black hover:text-white transition group" onclick="selectPackage(\'' + pkg.n + '\', ' + pkg.p + ')">' +
+                           '<h4 class="font-bold text-xl mb-2">' + pkg.n + '</h4>' +
+                           '<p class="text-gray-400 group-hover:text-gray-200 text-lg font-bold">₹' + pkg.p + '</p></div>';
+                }).join('');
+                goStep(2);
+            }
+        }
+
+        // Package Choice
+        function selectPackage(name, price) {
+            cart.package = name;
+            cart.price = price;
+            goStep(3);
+        }
+
+        // Validate details
+        function handleStep3() {
+            var name = document.getElementById('user-name').value;
+            var email = document.getElementById('user-email').value;
+            if (!name || !email) {
+                notify("Please enter your name and email.");
+                return;
+            }
+            goStep(4);
+        }
+
+        // DOM Initializations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll reveal
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-on-scroll').forEach(function(el) { observer.observe(el); });
+
+            // Logo Trigger
+            var logo = document.getElementById('logo-trigger');
+            if (logo) {
+                logo.onclick = function() {
+                    var plane = document.getElementById('paper-plane');
+                    if (plane) {
+                        plane.classList.remove('flying');
+                        void plane.offsetWidth;
+                        plane.classList.add('flying');
+                    }
+                    setTimeout(function() {
+                        var serv = document.getElementById('services');
+                        if (serv) serv.scrollIntoView({ behavior: 'smooth' });
+                    }, 2000);
+                };
+            }
+
+            // Video Modal
+            var playBtn = document.getElementById('header-play-btn');
+            var modal = document.getElementById('video-modal');
+            var closeM = document.getElementById('close-modal');
+            if (playBtn) playBtn.onclick = function() { modal.classList.remove('hidden'); };
+            if (closeM) closeM.onclick = function() {
+                modal.classList.add('hidden');
+                var frame = document.getElementById('vimeo-player');
+                if (frame) { var src = frame.src; frame.src = src; }
+            };
+
+            // Payment Handler
+            var payBtn = document.getElementById('pay-btn');
+            if (payBtn) {
+                payBtn.onclick = function() {
+                    if (typeof Razorpay === 'undefined') {
+                        notify("Payment gateway is loading. Try again in a moment.");
+                        return;
+                    }
+                    var options = {
+                        key: "", // Razorpay Public Key
+                        amount: cart.price * 100,
+                        currency: "INR",
+                        name: "Docdril Studio",
+                        description: cart.service + " - " + cart.package,
+                        handler: function (response) {
+                            document.querySelectorAll('.form-step').forEach(function(el) { el.classList.add('hidden'); });
+                            document.getElementById('success-screen').classList.remove('hidden');
+                            document.getElementById('form-progress').classList.add('opacity-0');
+                        },
+                        prefill: {
+                            name: document.getElementById('user-name').value,
+                            email: document.getElementById('user-email').value
+                        },
+                        theme: { color: "#000000" }
+                    };
+                    var rzp = new Razorpay(options);
+                    rzp.open();
+                };
+            }
+        });
+    </script>
+</body>
+</html>
